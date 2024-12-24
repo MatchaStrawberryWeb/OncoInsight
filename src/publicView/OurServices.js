@@ -1,7 +1,8 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import '../css/OurServices.css';
+import "../css/OurServices.css";
+import servicesSvg from "../assets/services.svg"; // Import the SVG
 
 const OurServices = () => {
   return (
@@ -9,6 +10,9 @@ const OurServices = () => {
       <Header /> {/* Header Component */}
 
       <div className="services-container">
+        {/* SVG Illustration */}
+        <img src={servicesSvg} alt="Services Illustration" className="services-svg" />
+
         {/* Introduction Section */}
         <section className="services-intro">
           <h2 className="intro-heading">Empowering Healthcare with AI</h2>
@@ -59,7 +63,6 @@ const OurServices = () => {
             </li>
           </ul>
         </section>
-
       </div>
 
       <Footer /> {/* Footer Component */}
