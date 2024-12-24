@@ -1,0 +1,156 @@
+/* Global Variables */
+:root {
+  --primary-bg: #f9fbfd; /* Light background */
+  --section-bg: #ffffff; /* White for sections */
+  --primary-text: #333333; /* Dark text */
+  --secondary-text: #555555; /* Lighter text */
+  --button-bg: #00796b; /* Teal for buttons */
+  --button-hover-bg: #004d40; /* Darker teal for hover */
+  --feature-bg: #e0f2f1; /* Light teal background for features */
+  --footer-bg: #004d40; /* Footer background */
+  --footer-text: #ffffff; /* Footer text color */
+  --card-shadow: rgba(0, 0, 0, 0.1); /* Shadow for cards */
+  --font-family: 'Roboto', sans-serif;
+  
+}
+
+/* General Styles */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  line-height: 1.6;
+}
+
+h2, h3 {
+  margin: 20px 0;
+  font-weight: 600;
+}
+
+p {
+  margin: 10px 0;
+}
+
+/* Services Container */
+.services-container {
+  padding: 50px 20px;
+  background-color: var(--primary-bg);
+  text-align: center;
+}
+
+/* Introduction Section */
+.services-intro {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.intro-heading {
+  font-size: 2.5rem;
+  color: var(--primary-text);
+}
+
+.intro-text {
+  font-size: 1.2rem;
+  color: var(--secondary-text);
+}
+
+/* Features Section */
+.features-section {
+  margin: 40px 0;
+}
+
+.features-heading {
+  font-size: 2.5rem;
+  color: var(--primary-text);
+}
+
+.feature-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.feature-card {
+  background-color: var(--section-bg);
+  box-shadow: 0 4px 8px var(--card-shadow);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 40px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--feature-bg);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px var(--card-shadow);
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--primary-text);
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: var(--secondary-text);
+}
+
+/* Insights Section */
+.insights-section {
+  margin: 40px 0;
+  padding: 20px;
+  background-color: var(--feature-bg);
+  text-align: left;
+  border-radius: 10px;
+}
+
+.insights-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.insights-list {
+  list-style: none;
+  padding: 0;
+}
+
+.insights-list li {
+  font-size: 1.1rem;
+  color: var(--primary-text);
+  margin-bottom: 15px;
+  line-height: 1.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .feature-cards {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .feature-card {
+      width: 90%;
+  }
+
+  .intro-heading {
+      font-size: 2rem;
+  }
+
+  .features-heading {
+      font-size: 2rem;
+  }
+
+  .cta-section h2 {
+      font-size: 2rem;
+  }
+}
