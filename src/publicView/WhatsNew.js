@@ -2,11 +2,17 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import "../css/WhatsNew.css";
+import newsSvg from "../assets/news.svg"; 
 
 const WhatsNew = () => {
   return (
     <div className="whats-new-page">
       <Header /> {/* Reuse Header component */}
+
+       {/* Displaying the news.svg image */}
+       <div className="news-icon">
+          <img src={newsSvg} alt="News updates" width={120} height={120} />
+        </div>
 
       <div className="whats-new-container">
         <h1 className="whats-new-heading">What's New at OncoInsight</h1>
