@@ -1,0 +1,32 @@
+/* Sidebar Styles */
+.sidebar {
+    background-color: #008080; /* Set background color to #008080 */
+    color: white; /* White text for contrast */
+    width: 250px; /* Adjust width as needed */
+    height: 100vh; /* Full height */
+    padding: 20px;
+    position: fixed; /* Fix the sidebar to the left */
+}
+
+.sidebar ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white; /* White text for links */
+    text-decoration: none; /* Remove underline */
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.sidebar ul li a:hover {
+    background-color: #004c4c; /* Darker shade for hover */
+}

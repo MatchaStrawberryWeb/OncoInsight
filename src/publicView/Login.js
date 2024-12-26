@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";  // Importing useNavigate instead of useHistory
 import "../css/Login.css";
 
 const Login = () => {
@@ -6,6 +7,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  
+  const navigate = useNavigate(); // Initialize navigate for routing
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +25,6 @@ const Login = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-      
 
       const data = await response.json();
 
@@ -31,7 +33,7 @@ const Login = () => {
         setError("");
         // Simulate redirecting to the dashboard after successful login
         setTimeout(() => {
-          window.location.href = "/dashboard";
+          navigate("/dashboard");  // Use navigate to route to the dashboard
         }, 1500);
       } else {
         setError(data.error || "Invalid credentials. Please contact the admin for assistance.");
@@ -42,6 +44,11 @@ const Login = () => {
       setError("An error occurred while trying to log in. Please try again.");
       setMessage("");
     }
+  };
+
+  // Function to handle "Test" button click and route to Dashboard.js
+  const handleTestButtonClick = () => {
+    navigate("/dashboard");  // Use navigate to route to Dashboard
   };
 
   return (
@@ -79,6 +86,11 @@ const Login = () => {
           <p>
             Note: User accounts are managed by the admin. If you do not have access, please contact the admin.
           </p>
+        </div>
+
+        {/* Test Button */}
+        <div className="test-button">
+          <button onClick={handleTestButtonClick}>Test</button>
         </div>
       </div>
     </div>

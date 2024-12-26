@@ -1,90 +1,28 @@
-import React, { useState, useEffect } from 'react';
-//import './UserDashboard.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Sidebar from './Sidebar'; // Sidebar with menu options
+import CancerPrediction from './CancerPrediction'; // Cancer Prediction page
+import PatientRecord from './PatientRecord'; // Patient Record page
+import DetailedReport from './DetailedReport'; // Detailed Report page
+import Profile from './Profile'; // Profile page
 
-const UserDashboard = () => {
-    const [diagnosis, setDiagnosis] = useState([]);
-    const [recommendations, setRecommendations] = useState([]);
+const Dashboard = () => {
+  return (
+    <div style={{ display: 'flex' }}>
+      {/* Sidebar */}
+      <Sidebar />
 
-    // Simulate fetching data for the user
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const diagnosisResponse = await fetch('http://127.0.0.1:8000/diagnosis');
-                const diagnosisData = await diagnosisResponse.json();
-                setDiagnosis(diagnosisData);
-    
-                const recommendationsResponse = await fetch('http://127.0.0.1:8000/recommendations');
-                const recommendationsData = await recommendationsResponse.json();
-                setRecommendations(recommendationsData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    }, []);
-    
-    const handleFileUpload = async (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('file', file);
-    
-            try {
-                const response = await fetch('http://127.0.0.1:8000/upload', {
-                    method: 'POST',
-                    body: formData,
-                });
-                const data = await response.json();
-                console.log('File upload successful:', data);
-            } catch (error) {
-                console.error('Error uploading file:', error);
-            }
-        }
-    };
-    
-
-    return (
-        <div className="dashboard-container">
-            <header>
-                <h1>Welcome to Your Dashboard</h1>
-                <p>Here's an overview of your recent diagnosis results and personalized recommendations.</p>
-            </header>
-            
-            <section className="recent-diagnosis">
-                <h2>Recent Diagnosis Results</h2>
-                <ul>
-                    {diagnosis.map((entry) => (
-                        <li key={entry.id}>
-                            <strong>Date:</strong> {entry.date} <br />
-                            <strong>Result:</strong> {entry.result}
-                        </li>
-                    ))}
-                </ul>
-            </section>
-
-            <section className="recommendations">
-                <h2>Personalized Recommendations</h2>
-                <ul>
-                    {recommendations.map((recommendation, index) => (
-                        <li key={index}>{recommendation}</li>
-                    ))}
-                </ul>
-            </section>
-
-            <section className="tools">
-                <h2>Quick Access Tools</h2>
-                <button onClick={() => alert('Access patient records')}>
-                    View Patient Records
-                </button>
-                <input
-                    type="file"
-                    accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
-                    onChange={handleFileUpload}
-                    className="file-upload"
-                />
-            </section>
-        </div>
-    );
+      {/* Main Content Area */}
+      <div style={{ marginLeft: '250px', padding: '20px', flex: 1 }}>
+        <Routes>
+          <Route path="cancer-prediction" element={<CancerPrediction />} />
+          <Route path="patient-record" element={<PatientRecord />} />
+          <Route path="detailed-report" element={<DetailedReport />} />
+          <Route path="profile" element={<Profile />} />
+        </Routes>
+      </div>
+    </div>
+  );
 };
 
-export default UserDashboard;
+export default Dashboard;
