@@ -42,7 +42,7 @@ body {
 .hero-section h1 {
   font-size: 3rem;
   margin-bottom: 20px;
-  color: #333333;
+  color: #005757;
 }
 
 .hero-section p {
@@ -60,13 +60,14 @@ body {
 .features-section h2 {
   font-size: 2.5rem;
   margin-bottom: 20px;
+  color: #005757;
 }
 
 .features {
   display: flex;
-  justify-content: space-around;
-  gap: 10px;
-  flex-wrap: wrap; /* Ensure responsiveness */
+  justify-content: space-between; /* Add space between features */
+  gap: 20px; /* Add spacing between feature boxes */
+  flex-wrap: nowrap; /* Prevent wrapping */
 }
 
 .feature {
@@ -74,13 +75,14 @@ body {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 30%;
+  width: 30%; /* Ensure all features have equal width */
   text-align: center;
 }
 
 .feature h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
+  color: #008080;
 }
 
 .feature p {

@@ -51,7 +51,7 @@ p {
 
 .intro-heading {
   font-size: 2.5rem;
-  color: var(--primary-text);
+  color: #008080;
 }
 
 .intro-text {
@@ -84,7 +84,7 @@ p {
 
 .features-heading {
   font-size: 2.5rem;
-  color: var(--primary-text);
+  color: #005757;
   margin-bottom: 20px;
 }
 
@@ -118,7 +118,7 @@ p {
 .feature-card h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: var(--primary-text);
+  color: #008080;
 }
 
 .feature-card p {
@@ -139,11 +139,16 @@ p {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 20px;
+  color: #005757;
 }
 
 .insights-list {
   list-style: none;
   padding: 0;
+}
+
+.insights-list li strong {
+  color: #008080;
 }
 
 .insights-list li {

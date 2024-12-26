@@ -24,6 +24,10 @@
     margin-bottom: 20px;
     color: var(--secondary-text);
   }
+
+  .content h2 {
+    color: #008080;
+  }
   
   .divider {
     margin: 20px 0;
