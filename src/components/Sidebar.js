@@ -4,7 +4,7 @@ import '../css/Sidebar.css';  // Ensure this path is correct
 const Sidebar = () => {
     return (
         <div className="sidebar">
-<div className="logo">OncoInsight AI</div>
+        <div className="logo-dashboard">OncoInsight AI</div>
             <ul>
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/cancer-prediction">Cancer Prediction</a></li>

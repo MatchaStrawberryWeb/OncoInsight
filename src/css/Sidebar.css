@@ -1,11 +1,16 @@
 .sidebar {
   width: 250px;
   height: 100vh;
-  background-color: #333;
+  background-color: #008080;;
   color: white;
   display: flex;
   flex-direction: column;
   padding: 20px;
+}
+
+.logo-dashboard {
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 .sidebar ul {
@@ -24,5 +29,5 @@
 }
 
 .sidebar li a:hover {
-  color: #008080; /* Color change on hover */
+  color: #005757;
 }
