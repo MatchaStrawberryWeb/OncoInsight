@@ -1,14 +1,82 @@
+/* src/styles/CancerDiagnosis.css */
+
 .diagnosis-container {
-    padding: 20px;
-  }
-  .file-upload {
-    margin-top: 20px;
-  }
-  .results {
-    margin-top: 30px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Ensures content is centered vertically */
+  align-items: center; /* Centers content horizontally */
+  height: 100vh; /* Takes full height of the viewport */
+  padding: 20px;
+  box-sizing: border-box; /* Prevents padding from affecting layout */
+}
+
+.page-title {
+  font-size: 2rem;
+  color: #008080;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-section {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-section {
+  margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="file"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #006f6f;
+}
+
+.file-upload {
+  margin-top: 20px;
+}
+
+.results {
+  margin-top: 30px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.results h4 {
+  margin-bottom: 10px;
+}
+
+.results p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.results .result-item {
+  margin-bottom: 10px;
+}
