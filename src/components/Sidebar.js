@@ -13,7 +13,7 @@ const Sidebar = () => {
                     </a>
                 </li>
                 <li>
-                    <a href="/cancer-prediction">
+                    <a href="/cancer-diagnosis">
                         <FaStethoscope className="menu-icon" /> Cancer Diagnosis
                     </a>
                 </li>
@@ -25,6 +25,7 @@ const Sidebar = () => {
                         <li><a href="/patient-record/breast-cancer">Breast Cancer</a></li>
                         <li><a href="/patient-record/lung-cancer">Lung Cancer</a></li>
                         <li><a href="/patient-record/skin-cancer">Skin Cancer</a></li>
+                        <li><a href="/patient-record/colorectal-cancer">Prostate Cancer</a></li>
                         <li><a href="/patient-record/colorectal-cancer">Colorectal Cancer</a></li>
                     </ul>
                 </li>

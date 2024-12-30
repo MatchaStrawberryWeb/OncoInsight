@@ -8,6 +8,7 @@ import WhatsNew from './publicView/WhatsNew';
 import AboutUs from './publicView/AboutUs';
 import Login from './publicView/Login';
 import Dashboard from './components/Dashboard'; // Dashboard component
+import CancerDiagnosis from './components/CancerDiagnosis';
 
 const App = () => {
   return (
@@ -22,6 +23,8 @@ const App = () => {
         
         {/* Protected Route for Dashboard */}
         <Route path="/dashboard/*" element={<Dashboard />} />
+
+        <Route path="/cancer-diagnosis" element={<CancerDiagnosis />} />
       </Routes>
     </Router>
   );
