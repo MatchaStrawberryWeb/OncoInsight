@@ -1,263 +1,134 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import '../css/CancerDiagnosis.css';
-
+import '../css/CancerDiagnosis.css';  // Import the CSS file
 
 const CancerDiagnosis = () => {
-  const [file, setFile] = useState(null); // Declare the 'file' state
-  const [result, setResult] = useState(null);
-  const [formData, setFormData] = useState({
-    size: '',
-    location: '',
-    shape: '',
-    margins: '',
-    density: '',
-    texture: '',
-    enhancement: '',
-    necrosis: '',
-    cavitation: '',
-    lymphNodes: '',
-    vascularity: '',
-    boneInvolvement: '',
-    tissueComposition: '',
-    radiographicFindings: '',
-    organInvolvement: '',
-    functionalTerms: '',
-    otherMedicalTerms: ''
+  const [patientDetails, setPatientDetails] = useState({
+    ic: '',
+    fullName: '',
+    gender: '',
+    age: '',
   });
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]); // Capture the uploaded file
-  };
-
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setPatientDetails((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
+  // Handle submit form data
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const data = new FormData();
-    if (file) {
-      data.append('file', file); // Append file to form data
-    }
-
-    // Append all form data
-    for (const key in formData) {
-      data.append(key, formData[key]);
-    }
-
-    // Send file and form data to backend API for cancer diagnosis
-    fetch("http://your-backend-url/api/diagnosis", {
-      method: "POST",
-      body: data,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Diagnosis result:", data);
-        setResult(data); // Display the diagnosis results
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    // Implement form submission logic here
+    console.log(patientDetails);
   };
 
+  // Extract information from IC number
+  const extractICDetails = () => {
+    const ic = patientDetails.ic;
+    if (ic.length === 12) {
+      // The first 2 digits represent the year, with logic to start from 1940
+      const yearPrefix = parseInt(ic.substring(0, 2), 10);
+      const year = yearPrefix < 40 ? `20${ic.substring(0, 2)}` : `19${ic.substring(0, 2)}`;
+      
+      // The next 2 digits represent the month of birth
+      const month = ic.substring(2, 4);
+
+      // The next 2 digits represent the day of birth
+      const day = ic.substring(4, 6);
+
+      // The last digit determines the gender (odd for male, even for female)
+      const genderCode = parseInt(ic.charAt(11), 10);
+      const gender = genderCode % 2 === 0 ? 'Female' : 'Male';
+
+      return { year, month, day, gender };
+    }
+    return { year: '', month: '', day: '', gender: '' };
+  };
+
+  const { year, month, day, gender } = extractICDetails();
+
   return (
-    <div>
+    <div className="diagnosis-container">
       <Sidebar />
-      <div style={{ marginLeft: '250px', padding: '20px' }}>
-        <h3>Cancer Diagnosis</h3>
+      <div className="form-section">
+        <h3 className="page-title">Cancer Diagnosis</h3>
         <form onSubmit={handleSubmit}>
-          <label>Upload Scan (MRI, CT, or PAD):</label>
-          <input type="file" accept=".jpg,.png,.jpeg,.dcm" onChange={handleFileChange} />
-          <br />
-
-          <label>Tumor Size (cm):</label>
-          <input
-            type="text"
-            name="size"
-            value={formData.size}
-            onChange={handleInputChange}
-            placeholder="e.g., 3.5 cm"
-          />
-          <br />
-
-          <label>Tumor Location:</label>
-          <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleInputChange}
-            placeholder="e.g., left lung"
-          />
-          <br />
-
-          <label>Tumor Shape:</label>
-          <input
-            type="text"
-            name="shape"
-            value={formData.shape}
-            onChange={handleInputChange}
-            placeholder="e.g., irregular"
-          />
-          <br />
-
-          <label>Margins (Well-defined/Irregular):</label>
-          <input
-            type="text"
-            name="margins"
-            value={formData.margins}
-            onChange={handleInputChange}
-            placeholder="e.g., spiculated"
-          />
-          <br />
-
-          <label>Density (High/Low):</label>
-          <input
-            type="text"
-            name="density"
-            value={formData.density}
-            onChange={handleInputChange}
-            placeholder="e.g., high density"
-          />
-          <br />
-
-          <label>Texture:</label>
-          <input
-            type="text"
-            name="texture"
-            value={formData.texture}
-            onChange={handleInputChange}
-            placeholder="e.g., homogeneous"
-          />
-          <br />
-
-          <label>Enhancement:</label>
-          <input
-            type="text"
-            name="enhancement"
-            value={formData.enhancement}
-            onChange={handleInputChange}
-            placeholder="e.g., rim enhancement"
-          />
-          <br />
-
-          <label>Necrosis:</label>
-          <input
-            type="text"
-            name="necrosis"
-            value={formData.necrosis}
-            onChange={handleInputChange}
-            placeholder="e.g., central necrosis"
-          />
-          <br />
-
-          <label>Cavitation:</label>
-          <input
-            type="text"
-            name="cavitation"
-            value={formData.cavitation}
-            onChange={handleInputChange}
-            placeholder="e.g., presence of cavity"
-          />
-          <br />
-
-          <label>Lymph Node Involvement:</label>
-          <input
-            type="text"
-            name="lymphNodes"
-            value={formData.lymphNodes}
-            onChange={handleInputChange}
-            placeholder="e.g., enlarged axillary nodes"
-          />
-          <br />
-
-          <label>Vascularity (Blood Flow to Tumor):</label>
-          <input
-            type="text"
-            name="vascularity"
-            value={formData.vascularity}
-            onChange={handleInputChange}
-            placeholder="e.g., increased vascularity"
-          />
-          <br />
-
-          <label>Bone Involvement:</label>
-          <input
-            type="text"
-            name="boneInvolvement"
-            value={formData.boneInvolvement}
-            onChange={handleInputChange}
-            placeholder="e.g., bone erosion"
-          />
-          <br />
-
-          <label>Tissue Composition (e.g., Cystic/Solid):</label>
-          <input
-            type="text"
-            name="tissueComposition"
-            value={formData.tissueComposition}
-            onChange={handleInputChange}
-            placeholder="e.g., solid mass"
-          />
-          <br />
-
-          <label>Radiographic Findings (e.g., Opacity/Lesion):</label>
-          <input
-            type="text"
-            name="radiographicFindings"
-            value={formData.radiographicFindings}
-            onChange={handleInputChange}
-            placeholder="e.g., lung opacity"
-          />
-          <br />
-
-          <label>Organ Involvement:</label>
-          <input
-            type="text"
-            name="organInvolvement"
-            value={formData.organInvolvement}
-            onChange={handleInputChange}
-            placeholder="e.g., liver metastasis"
-          />
-          <br />
-
-          <label>Functional Terms (Perfusion, Diffusion):</label>
-          <input
-            type="text"
-            name="functionalTerms"
-            value={formData.functionalTerms}
-            onChange={handleInputChange}
-            placeholder="e.g., restricted diffusion"
-          />
-          <br />
-
-          <label>Other Medical Terms (e.g., Tumor Markers):</label>
-          <input
-            type="text"
-            name="otherMedicalTerms"
-            value={formData.otherMedicalTerms}
-            onChange={handleInputChange}
-            placeholder="e.g., elevated CA-125"
-          />
-          <br />
-
-          <button type="submit">Diagnose</button>
-        </form>
-
-        {file && <p>Selected file: {file.name}</p>}
-        {result && (
-          <div>
-            <h4>Diagnosis Result:</h4>
-            <p>Cancer Type: {result.cancerType}</p>
-            <p>Treatment Guidance: {result.treatment}</p>
-            <p>Survival Prediction: {result.survivalPrediction}</p>
+          {/* Patient Details Section */}
+          <div className="input-section">
+            <label>IC Number:</label>
+            <input
+              type="text"
+              name="ic"
+              value={patientDetails.ic}
+              onChange={handleInputChange}
+              maxLength="12"
+              required
+            />
+            <div>
+              {/* Displaying extracted IC information */}
+              <p>Year of Birth: {year}</p>
+              <p>Month of Birth: {month}</p>
+              <p>Day of Birth: {day}</p>
+              <p>Gender: {gender}</p>
+            </div>
           </div>
-        )}
+
+          <div className="input-section">
+            <label>Full Name:</label>
+            <input
+              type="text"
+              name="fullName"
+              value={patientDetails.fullName}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="input-section">
+            <label>Age:</label>
+            <input
+              type="number"
+              name="age"
+              value={patientDetails.age}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          {/* Gender Selection */}
+          <div className="input-section">
+            <label>Gender:</label>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Male"
+                  checked={patientDetails.gender === 'Male'}
+                  onChange={handleInputChange}
+                />
+                Male
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Female"
+                  checked={patientDetails.gender === 'Female'}
+                  onChange={handleInputChange}
+                />
+                Female
+              </label>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </div>
   );
