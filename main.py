@@ -5,6 +5,7 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import io
+from dependencies.database import init_db
 
 # Create FastAPI app instance
 app = FastAPI()
