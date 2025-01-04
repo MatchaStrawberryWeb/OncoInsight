@@ -6,11 +6,18 @@ from dependencies.database import SessionLocal, init_db
 from database_model.user import User
 from backend.routes.login import router as login_router
 from backend.routes.dashboard import router as dashboard_router
+from backend.routes.test_connection import router as test_connection_router
+# backend/app.py
+from backend.routes.init_db import router as init_db_router
+
 
 app = FastAPI()
 
+# Include the test connection route
+app.include_router(test_connection_router)
 app.include_router(login_router)
 app.include_router(dashboard_router)
+app.include_router(init_db_router)
 
 # Initialize the database tables
 init_db()
@@ -49,3 +56,10 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         )
     return {"message": "Login successful", "username": user.username}
 
+@app.get("/")
+def test_root():
+    return {"message": "API is working"}
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to OncoInsight AI"}

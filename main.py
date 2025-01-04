@@ -1,17 +1,22 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 import os
-import tensorflow as tf
+import joblib  # Use for loading .pkl models
 from PIL import Image
 import numpy as np
 import io
-from dependencies.database import init_db
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Create FastAPI app instance
 app = FastAPI()
 
-# Directory where your models are stored
-MODEL_DIR = "../models"
+# Resolve model directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_DIR = os.path.join(BASE_DIR, "models")
 
 # Function to load model dynamically based on the cancer type
 def load_model(cancer_type: str):
@@ -20,8 +25,8 @@ def load_model(cancer_type: str):
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model for {cancer_type} not found at {model_path}")
     
-    # Load and return the model
-    return tf.keras.models.load_model(model_path)
+    # Load and return the model using joblib
+    return joblib.load(model_path)
 
 # API endpoint for cancer diagnosis based on uploaded file
 @app.post("/api/diagnosis/{cancer_type}")
@@ -30,6 +35,8 @@ async def diagnosis(cancer_type: str, file: UploadFile = File(...)):
     Endpoint to handle file upload and return cancer diagnosis for the given cancer type.
     """
     try:
+        logger.info(f"Diagnosis request for cancer type: {cancer_type}")
+        
         # Check if the cancer type is valid
         valid_cancer_types = ["breast", "lung", "prostate", "colon", "skin"]
         if cancer_type not in valid_cancer_types:
@@ -54,8 +61,10 @@ async def diagnosis(cancer_type: str, file: UploadFile = File(...)):
         return JSONResponse(content={"result": result}, status_code=200)
 
     except FileNotFoundError as e:
+        logger.error(f"FileNotFoundError: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=404)
     except Exception as e:
+        logger.error(f"Error: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
 # Optional root endpoint for testing

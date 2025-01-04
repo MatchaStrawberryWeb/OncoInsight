@@ -18,8 +18,8 @@ const Login = () => {
       return;
     }
 
+    console.log("Logging in with username:", username);  // Debug log
     try {
-      // Simulating login with backend server
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,13 +27,13 @@ const Login = () => {
       });
 
       const data = await response.json();
+      console.log("Login response:", data);  // Debug log
 
       if (response.ok) {
         setMessage("Login successful! Redirecting...");
         setError("");
-        // Simulate redirecting to the dashboard after successful login
         setTimeout(() => {
-          navigate("/dashboard");  // Use navigate to route to the dashboard
+          navigate("/dashboard");
         }, 1500);
       } else {
         setError(data.error || "Invalid credentials. Please contact the admin for assistance.");
@@ -44,7 +44,8 @@ const Login = () => {
       setError("An error occurred while trying to log in. Please try again.");
       setMessage("");
     }
-  };
+};
+
 
   // Function to handle "Test" button click and route to Dashboard.js
   const handleTestButtonClick = () => {
