@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Navigate, Routes, Route } from 'react-router-dom'; // Import Routes and Route
 import Sidebar from './Sidebar'; // Sidebar with menu options
 import CancerDiagnosis from './CancerDiagnosis'; // Cancer Prediction page
 import PatientRecord from './PatientRecord'; // Patient Record page
@@ -8,17 +8,29 @@ import Profile from './Profile'; // Profile page
 import '../css/Dashboard.css';
 
 const Dashboard = () => {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!isLoggedIn) {
+      // Redirect to login if the user is not logged in
+      return <Navigate to="/login" />;
+    }
+
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
     <div style={{ display: 'flex' }}>
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Main Content Area */}
       <div style={{ marginLeft: '250px', padding: '20px', flex: 1 }}>
-        <h1>Welcome back, [User Name] 👋</h1>
+        <h1>Welcome back, {username || 'User'} 👋</h1> {/* Display the username */}
         <p>Here's the latest update from the last 7 days. Check now.</p>
 
-        {/* Statistics Cards */}
+        {/* Stats and other dashboard content */}
         <div className="stats-container">
           <div className="stat-card">
             <h2>10,525</h2>
@@ -34,18 +46,6 @@ const Dashboard = () => {
             <h2>523</h2>
             <p>Surgeries</p>
             <span>↑ 10%</span>
-          </div>
-        </div>
-
-        {/* Charts */}
-        <div className="chart-container">
-          <div className="chart">
-            <h3>Patient Statistics</h3>
-            {/* Embed chart using a library like Chart.js or Recharts */}
-          </div>
-          <div className="calendar">
-            <h3>Calendar</h3>
-            {/* Embed calendar using a library like React-Calendar */}
           </div>
         </div>
 

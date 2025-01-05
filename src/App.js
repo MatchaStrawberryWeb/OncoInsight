@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Importing pages/components
 import HomePage from './publicView/HomePage';
@@ -9,6 +9,7 @@ import AboutUs from './publicView/AboutUs';
 import Login from './publicView/Login';
 import Dashboard from './components/Dashboard'; // Dashboard component
 import CancerDiagnosis from './components/CancerDiagnosis';
+import Protected from './components/Protected'; // Ensure the correct path for Protected component
 
 const App = () => {
   return (
@@ -22,7 +23,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         
         {/* Protected Route for Dashboard */}
-        <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route 
+          path="/dashboard" 
+          element={
+            <Protected component={Dashboard} /> // Protect the route with the Protected component
+          }
+        />
 
         <Route path="/cancer-diagnosis" element={<CancerDiagnosis />} />
       </Routes>

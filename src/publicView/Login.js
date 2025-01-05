@@ -7,49 +7,40 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-  
+
   const navigate = useNavigate(); // Initialize navigate for routing
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
-      setError("Both fields are required.");
-      return;
-    }
-
-    console.log("Logging in with username:", username);  // Debug log
     try {
-      const response = await fetch('http://localhost:8000/login'
-        , {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
+        const response = await fetch('http://localhost:8000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
+        });
 
-      const data = await response.json();
-      console.log("Login response:", data);  // Debug log
+        const data = await response.json();
 
-      if (response.ok) {
-        setMessage("Login successful! Redirecting...");
-        setError("");
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 1500);
-      } else {
-        setError(data.error || "Invalid credentials. Please contact the admin for assistance.");
-        setMessage("");
-      }
+        if (response.ok) {
+            // Login successful
+            setError(""); // Clear any previous errors
+            setMessage("Login successful!");
+            navigate('/dashboard'); // Redirect to dashboard
+        } else {
+            // Display specific error message from the backend
+            setError(data.detail); // Backend sends "Invalid username." or "Incorrect password. Username is correct."
+        }
     } catch (err) {
-      console.error("Error during login:", err);
-      setError("An error occurred while trying to log in. Please try again.");
-      setMessage("");
+        console.error('Error:', err);
+        setError('An error occurred while trying to log in.');
     }
 };
 
-
+  
   // Function to handle "Test" button click and route to Dashboard.js
   const handleTestButtonClick = () => {
+    localStorage.setItem('isLoggedIn', 'true'); // Set login state in localStorage for test purposes
     navigate("/dashboard");  // Use navigate to route to Dashboard
   };
 
