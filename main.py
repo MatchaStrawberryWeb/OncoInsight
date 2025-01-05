@@ -6,6 +6,10 @@ from PIL import Image
 import numpy as np
 import io
 import logging
+import mysql.connector
+import bcrypt
+from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -13,6 +17,52 @@ logger = logging.getLogger(__name__)
 
 # Create FastAPI app instance
 app = FastAPI()
+
+# Enable CORS for all origins (or restrict to your frontend URL)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace with your frontend URL to restrict
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Pydantic model to validate the incoming request data
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+# Function to check login credentials
+def check_login(username: str, password: str):
+    # Connect to the MySQL database
+    conn = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='',  # Add your MySQL password here
+        database='oncoinsight'
+    )
+    cursor = conn.cursor()
+
+    # Retrieve the hashed password for the username from the database
+    cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
+    result = cursor.fetchone()
+
+    # Close the connection
+    conn.close()
+
+    if result:
+        stored_hash = result[0]
+        if bcrypt.checkpw(password.encode('utf-8'), stored_hash.encode('utf-8')):
+            return True
+    return False
+
+# FastAPI route to handle login
+@app.post("/login")
+async def login(request: LoginRequest):
+    if check_login(request.username, request.password):
+        return {"message": "Login successful!"}
+    else:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
 
 # Resolve model directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

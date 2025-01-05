@@ -20,7 +20,8 @@ const Login = () => {
 
     console.log("Logging in with username:", username);  // Debug log
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('http://localhost:8000/login'
+        , {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),

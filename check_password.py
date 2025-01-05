@@ -1,14 +1,9 @@
-from passlib.context import CryptContext
+import bcrypt
 
-# Create a CryptContext instance to handle password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+hashed_password = b"$2b$12$Ecq7RiqluhIpBsK/z8NJFumrNNGWY3Q7G2RRSFXsoAnx7LuYdErBO" 
+plaintext_password = "admin"
 
-# Your example password and hashed password from the database
-password = "admin"  # Plain text password you want to verify
-hashed_password = "$2a$10$uS7ZdW0QskE9xhVnnSdy1OBbQF.vZkLVAGD5kLgH0eH9xXkIE5TtC"  # The hashed password
-
-# Verify the password against the hash
-if pwd_context.verify(password, hashed_password):
+if bcrypt.checkpw(plaintext_password.encode('utf-8'), hashed_password):
     print("Password matches!")
 else:
-    print("Invalid password")
+    print("Password does not match.")

@@ -1,29 +1,28 @@
-# backend/routes/login.py
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+import mysql.connector
 import bcrypt
 
-router = APIRouter()
+# Connect to your MySQL database
+conn = mysql.connector.connect(
+    host='localhost',           
+    user='root',      
+    password='',
+    database='oncoinsight'  
+)
 
-# Example user data for authentication (replace with real database in production)
-users_db = {
-    "admin": {"username": "admin", "password": "$2a$10$uS7ZdW0QskE9xhVnnSdy1OBbQF.vZkLVAGD5kLgH0eH9xXkIE5TtC"}  # Admin with hashed password
-}
+cursor = conn.cursor()
 
-class LoginData(BaseModel):
-    username: str
-    password: str
+# Retrieve the hashed password for the 'admin' user
+cursor.execute("SELECT password FROM users WHERE username = %s", ('admin',))
+stored_hash = cursor.fetchone()[0]  # This returns the hashed password from the database
 
-@router.post("/login")
-async def login(data: LoginData):
-    print(f"Attempting login for: {data.username}")  # Debug log
-    user = users_db.get(data.username)
-    if user:
-        print(f"User found: {user}")  # Debug log
-        # Check hashed password
-        if bcrypt.checkpw(data.password.encode('utf-8'), user["password"].encode('utf-8')):
-            return {"message": "Login successful", "redirect": "/dashboard"}
-        else:
-            raise HTTPException(status_code=401, detail="Invalid credentials")
-    else:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+# Close the connection
+conn.close()
+
+# Input the plaintext password for login
+plaintext_password = "admin"  # Example input password
+
+# Check if the entered password matches the stored hash
+if bcrypt.checkpw(plaintext_password.encode('utf-8'), stored_hash.encode('utf-8')):
+    print("Login successful!")
+else:
+    print("Login failed. Incorrect password.")
