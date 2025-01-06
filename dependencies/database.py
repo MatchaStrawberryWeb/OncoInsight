@@ -1,13 +1,12 @@
-# dependencies/database.py
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Database connection URL
-DATABASE_URL = "mysql+mysqlconnector://root:@localhost:3306/oncoinsight"
+# Define the database connection string
+SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:@localhost:3306/oncoinsight"
 
-# Create the database engine
-engine = create_engine(DATABASE_URL, connect_args={"host": "localhost", "port": "3306"})
+# Create the engine
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"host": "localhost", "port": "3306"})
 
 # SessionLocal is a factory for creating new sessions
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

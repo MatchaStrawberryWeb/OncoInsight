@@ -57,9 +57,5 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     return {"message": "Login successful", "username": user.username}
 
 @app.get("/")
-def test_root():
-    return {"message": "API is working"}
-
-@app.get("/")
 def read_root():
     return {"message": "Welcome to OncoInsight AI"}
